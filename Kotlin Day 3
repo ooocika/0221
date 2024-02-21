@@ -1,0 +1,817 @@
+plugins{
+  id("org.jetbrains.kotlin.plugin.sam.with.receiver")version "$kotlin_version"
+  
+}
+//
+kapt{
+  showProcessorStats = true
+  
+}
+//
+sourceSets{
+  all{
+    languageSetting.optIn("org.mylibrary.OptInAnnotation")
+  }
+}
+//
+kotlin{
+  jvmToolchain{
+    (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(<MAJOR_KDK_VERSION>))
+  }
+}
+//
+kotlin{
+  jvmToolchain{
+    languageVersion.set(JavaLanguageVersion.of(<MAJOR_JDK_VERSION>))
+  }
+}
+//
+interface LoggingContext{
+  val log:Logger
+}
+
+context(LoggingContext)
+fun startBusinessOperation(){
+  log.info("Operation has started")
+}
+
+fun test(loggingContext: LoggingContext){
+  with(loggingContext){
+
+    startBusinessOperation()
+  }
+}
+//
+fun <T> elvisLike(x: T, y: T & Any): T & Any = x ?: y
+
+fun main(){
+  elvisLike<String>("","")length
+
+  elvisLike<String>("", null).length
+
+  elvisLike<String>(null, "").length
+
+  elvisLike<String?>(null, null).length
+  }
+//
+kotlin{
+  sourceSets.all{
+    languageSettings.apply{
+      languageVersion = "1.7"
+    }
+  }
+}
+//
+kotlin{
+  sourceSets.all{
+    languageSettings{
+      languageVersion = "1.7"
+    }
+  }
+}
+//
+interface Printer{
+  fun print()
+}
+fun Printer(block: ()->Unit): Printer = object: Printer{override fun print() = block()}
+
+//
+fun interface Printer{
+  fun print()
+}
+//
+documentsStorage.addPrinter(::Printer)
+//
+@Deprecated(message = "Your message about the deprecation", level = DeprecationLevel.HIDDEN)
+fun Printer(...) {...}
+//
+fun main() = bar()
+fun bar() = bar()
+inline fun baz(){
+  error("")
+  }
+//
+kotlin{
+  androidNativeX64("android"){
+    binaries{
+      executable{
+        binaryOptions["androidProgramType"] = "standalone"
+      }
+    }
+  }
+}
+//
+binaryOptions["androidProgramType"] = "nativeActivity"
+//
+kotlin{
+  cocoapods{
+    version = "1.0"
+    name = "MyCocoPod"
+    extraSpecAttributes["social_media_url"] = 'http://twitter.com/kotlin'
+    extraSpecAttributes["vendored_frameworks"] = "CustomFramework.xcframework"
+  extraSpecAttributes["libraries"]= 'xml'
+  }
+}
+//
+val a = run{
+  val result = 
+  println(result)
+  result
+}
+//
+tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile::class).configureEach{
+
+  kotlinOptions.freeCompilerArgs += "-Xklib-relative-path=base= $base"
+}
+//
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin>{
+  rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().lockFileDirectory = project.rootDir.resolve("my-koltin-js-store")
+  rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().lockFileName ="my-yarn.lock"}
+//
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin>{
+  rootProject.the<org.jetbrains.kotlin.gradle.target.js.yarn.YarnRootExtension>().ignoreScripts = false
+}
+//
+task.withType<KotlinCompile>().comfigureEach{
+  compilerExecutionStrategy.set(KotlinCompilerExecutionStrategy.IN_PROCESS)
+}
+//
+sealed class Contact{
+  data class PhoneCall(val number: String): Contact()
+  data class TextMessage(val number:String) : Contact()
+}
+
+fun Contact.messageCost(): Int = 
+  when(this){
+    is Contact.PhoneCall -> 42
+  }
+
+  fun sendMessage(contact: Contact, message: String){
+    when(message.isEmpty()){
+      true -> return 
+
+      
+    }
+    when(contact){
+      is Contact.PhoneCall ->TODO()
+    }
+  }
+  //
+  class MyClickAction : suspend() ->Unit{
+    override suspend fun invoke(){TODO()}
+  }
+  fun languageOnClick(action: suspend() -> Unit) {}
+
+  //
+  fun getSuspending(suspending: suspend() -> Unit) {}
+  fun suspending() {}
+
+  fun test(regular: () -> Unit){
+    getSuspending(::suspending)
+    getSuspending(regular)
+  }
+  //
+  val containerA = PostgreSQLContainer<Nothing>(DockerImageName).parse("postgres:13-alpine")).apply{
+
+    withDatabaseName("db")
+    withUsername("user")
+    withPassword("password")
+    withInitScript("sql/schema.sql")
+  }
+
+  val containerB = PostgreSQLContainer(DockerImageName.parse("postgres:13-aipine"))
+  .withDatabaseName("db")
+  withUsername("user")
+    withPassword("password")
+    withInitScript("sql/schema.sql")
+  //
+  @Target (AnnotationTarget.TYPE_PARAMETER)
+  annotation class BoxContext
+
+class Box<@BoxContent T> {}
+//
+@Repeatable
+annotation class Tag(val name: String)
+
+//
+@JvmRepeatable(Tags::class)
+annotation class Tag(val name: String)
+
+annotation class Tags(val value: Array<Tag>)
+//
+class Box<T>{
+  private var impl: T = ...
+  var content: T by ::impl
+}
+//
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin>{
+  rootProject.the<irg.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().download =false
+}
+//
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin>{
+  rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().download =false
+}
+//
+println("What is your nickname?")
+val nickname = readln()
+println("Hello, $nickname!")
+//
+fun main(){
+  var sum = 0
+  while (true){
+    val nextLine = readOrNull().takeUnless{
+      it.isNullOrEmpty()
+    } ?: break
+    sum+= nextLine.toInt()
+  }
+  println(sum)
+
+
+}
+//
+inline fun <reified T> renderType():String{
+  val type = typeOf<T>()
+  return type.toString()
+}
+
+fun main(){
+  val fromExplicitType = typeOf<Int>()
+  val fromReifiedType = renderType<List<Int>>()
+
+  
+}
+//
+fun main(){
+
+  val x = listOf('b', 'c')
+  val y = buildList{
+    add('a')
+    allAll(x)
+    add('d')
+  }
+  println(y)
+
+}
+//
+fun main(){
+  val duration = 10000
+  println("There are ${duration.seconds.inWholeMinutes} minutes in $duration seconds")
+  
+}
+//
+fun main(){
+  val colorsText = "green, red, brown&blue, orange, pink&green"
+  val regex = "[,\\s]+".toRegex()
+  val mixedColor = regex.splitToSequence(colorsText)
+
+  .onEach{println(it)}
+  .firstOrNull{it.contains('&')}
+
+  println(mixedColor)
+}
+//
+fun main(){
+  val number: Short = 0b10001
+  println(number
+         .rotateRight(2)
+         .toString(radix = 2)
+         println(number
+                .rotateLeft(2)
+                .toString(radix = 2))
+         )
+}
+// 
+fun main(){
+  println(Regex("(.+)").replace("Kotlin", """\$ $1"""))
+  println(Regex("(.+)").replaceFirst("1.6.0", """\\ $1"""))
+}
+//
+class WrapperdText(val text: String) : Comparable<WrappedText>{
+  override fun compareTo(other: WrappedText): Int = 
+  this.text compareTo other.text
+}
+//
+sealed class Node{
+  object ON : Mode()
+  object OFF : Mode()
+  
+}
+
+fun main(){
+  val x: Mode = Mode.context
+
+when(x){
+  Mode.ON -> println("ON")
+}
+
+  val y: Boolean = true
+  when (y){
+    true -> println("true")
+  }
+  }
+//
+kotlin{
+  sourceSets.all{
+    languageSettings.apply{
+      languageVersion = "1.6"
+    }
+  }
+}
+//
+kotlin{
+  sourceSets.all{
+    languageSettings{
+      languageVersion = '1.6'
+    }
+  }
+}
+//
+class MyClass:suspend() ->Unit{
+  override suspend fun invoke(){
+    TODO()
+  }
+}
+
+//
+kotlin{
+  sourceSets.all{
+    languageSettings.apply{
+      languageVersion ="1.6"
+    }
+  }
+}
+//
+@RequiresOptIn(message = "This API is experimental.")
+@Retention(AnnotaionRetention.BINARY)
+@Target(AnnotationTarget.CLASS)
+annotation class MyDateTime
+
+@MyDateTime
+class DateProvider
+
+fun createDateSource() : DateProvider
+
+fun getDate(): Date{
+  val dataSource = createDateSource()
+}
+
+//
+val containerA = PostgreSQLContainer<Nothing>(DockerImageName.parse("postgres:13-apline")).apply{
+  withDatabaseName("db")
+  withUsername("user")
+  withPassword("password")
+  withInitScript("sql/schema.sql")
+
+}
+
+val containerB = PostgreSQLContainer(DockerImageName.parse("postgree:13-alpine
+                                                           "))
+                                                           withDatabaseName("db")
+                                                           withUsername("user")
+                                                           withPassword("password")
+                                                           withInitScript("sql/schema.sql")
+//
+@kotlin.ExperimentalStdlibApi
+ val list = buildList{
+   add("a")
+   add("b")
+   set(1, null)
+   val x = get(1)
+   if(x != null){
+     removeAt(1)
+   }
+ }    
+
+ @kotlin.ExperimentalStdlibApi
+val map = buildMap{
+  put("a", 1)
+  put("b", 1.1)
+  put("c", 2f)
+}
+//
+annotation class InfoMarker(val info: String)
+
+fun processInfo(marker:InfoMarker) = ...
+
+                                                           fun main(args: Array<String>)
+                                                           {
+                                                             if(args.size != 0)
+                                                           processInfo(getAnnotationReflective(args))
+                                        else
+                                                             processInfo(InfoMarker("default"))
+                                                           
+                                                           }
+//
+cocoapods{
+  frameworkName = "MyFramework"
+
+  framework{
+
+    baseName = "MyFramework"
+    
+    isStatic = false
+    export(project(":anotherKMMModule"))
+    transitiveExport = false
+
+    embedBitcode(BITCODE)
+  }
+
+}
+//
+cocoapods{
+  xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+  xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
+}
+//
+object MyObject{
+  val x = "Some value"
+}
+
+class MyClass{
+  companion object{
+    val x = "Some value"
+  }
+}
+//
+ MyObject.shared
+ MyObject.shared.x
+MyClass.companion
+ MyClass.Companion.shared
+
+ //
+  plugins{
+    kotlin("multiplatform")
+  }                      
+
+  koltin{
+    val xcf = XCFramework()
+
+    ios{
+      binaries.framework{
+        baseName = "shared"
+        xcf.add(this)
+      }
+    }
+
+    watchos{
+      binaries.framework{
+        baseName ="shared"
+        xcf.add(this)
+      }
+    }
+
+    tvos{
+      binaries.framework{
+      baseName ="shared"
+      xcf.add(this)
+
+      
+    }
+  }
+    //
+    plugins{
+      id 'org.jetbrains.kotlin.multiplatform'
+    }
+
+    kotlin{
+      def xcf = new XCFrameworkConfig(project)
+
+      ios{
+        binaries.framework{
+          baseName = "shared"
+          xcf.add(it)
+        }
+      }
+      watchos{
+        binaries.framework{
+          baseName = "shared"
+          scf.add(it)
+        }
+      }
+      tvos{
+        binaries.framework{
+        baseName ="shared"
+        xcf.add(it)
+      }
+    }
+
+      //
+ kotlin{
+   jvmToolchain{
+     (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(<MAJOR_JDK_VERSION>))
+   }
+ }     
+ //
+java{
+  toolchain{
+    languageVersion.set(JavaLanguageVersion.of(<MAJOR_JDK_VERSION>))
+  }
+}
+//
+project.tasks
+      .withType<UsesKotlinJavaToolchain>()
+      .configureEash{
+        it.kotlinJavaToolchain.jdk.use(
+          "/path/to/local/jdk",
+          JavaVersion.<LOCAL_JDK_VERSION>
+        )
+      }
+      //
+ kotlin{
+   kotlinDaemonJvmArgs = listOf("-Xmx486m","-Xms256m", "-XX:+UseParallelGC")
+ }     
+ //
+ tasks
+      .matching{it.name == "compileKotlin" && if is CompileUsingKotlinDaemon}
+      .configureEach{
+        (this as CompileUsingKotlinDaemon).kotlinDaemonJvmArguments.set(listOf("-Xmx486m",
+                                                                              "-Xms256m", "XX:+UseParallelGC"))
+      }
+      //
+      @ExperimentalTime
+      fun main(){
+        val isoFormatString = "PT1H30M"
+        val defaultFormatString = "1h 30m"
+        val singleUnitFormatString = "1.5"
+        val invalidFormatString = "1 hour 30 minutes"
+
+        println(Duration.parse(isoFormatString))
+        println(Duration.parse(defaultFormatString))
+        println(Duration.parse(singleUnitFormatString))
+
+      println(Duration.parseOrNull(invalidFormatString))
+      }
+      //
+      fun main(){
+        val usoFormatString = "PT1H30M"
+        val defaultFormatString = "1h 30m"
+        println(Duration.parseIsoString(isoFormatString))
+
+        println(Duration.parseIsoStringOrNull(defaultFormatString))
+      }
+      //
+      fun main(){
+        val releaseText = "Kotlin 1.5.30 is released!"
+      
+      val versionRegex = "\\d[.]\\d[.]\\d+"toRegex()
+      println(versionRegex.matchesAt(releaseText, 0))
+      println(versionRegex.matchesAt(releaseText, 7))
+      }
+      //
+      fun main(){
+        val releaseText = "Kotlin 1.5.30 is released!"
+
+      val versionRegex = "\\d[.]\\d[.]\\d+"toRegex()
+      println(versionRegex.matchesAt(releaseText, 0))
+      println(versionRegex.matchesAt(releaseText, 7)?.value)
+      }
+      //
+      
+      fun main(){
+
+        val colorText = "green, red, brown&blue, orange, pink&green"
+        val regex = "[,\\s]+".toRegex()
+        val mixedColor = regex.splitToSequence(colorText)
+        .onEach{println(it)}
+        .firstOrNull{it.contains('&')}
+      println(mixedColor)
+      }
+      //
+      val mixedColor = colorsText.splitToSequence(regex)
+      //
+      @NullMarked
+      public class JavaClass{
+        public String notNullableString(){return "";}
+        public @Nullable String nullableString() {return ""; }
+      }
+      //
+      fun kotlinFun() = with(JavaClass()){
+        notNullableString().length
+        nullableString().length
+      }
+      //
+      fun printSum(a:Int, b: Int) = println(a.toLong() + b)
+      //
+      (void)printSumA:(int32_t)a b:(int32_t)b --attribute__((swift_name("printSum(a:b:")));
+
+      //
+      kotlin{
+        targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>{
+          compilations.get("main").kotlinOptions.freeCompilerArgs += "-Xexport-kdoc"
+        }
+      }
+      //
+      fun main(){
+        val ten = '\u0661'.digitToInt() + '\u0039'.digitToInt()
+        println(ten)
+      }
+      //
+      fun main(){
+        val latinCapitalA = 'A'
+        val circledLatinCapitalA = 'A'
+        println(latinCapitalA.isUpperCase() && circledLatinCapitalA.isUpperCae())
+      }
+      //
+      @JvmRecord
+      data class User (val name: String, val age: Int)
+      //
+      sealed interface Polygon
+
+      fun draw(polygon: Polygon) = when(polygon){
+        is Rectangle ->
+        is Triangle ->
+      }
+      //
+      class FilledRectangle: Polygon , Filable
+      //
+      value class Password(val s: String)
+
+      @JvmInline
+      value class Password(val s : Stirng)
+      //
+      task.withType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile>{
+        kotlinOptions.useOldBackend = true
+      }
+      //
+      Platform.isMemoryLeakCheckerActive = true//
+      fun Char(code:Int) : Char
+      fun Char(code: UShort): Char
+      val Char.code: Int
+
+      fun Char.digitToInt(radix: Int): Int
+      fun Char.digitToIntOrnull(radix: Int): Int?
+
+      fun Int.digitToChar(radix: Int): Char
+
+      //
+      val baseDir = Path("/base")
+      val subDir = baseDir / "subdirectory"
+
+      val kotlinFiles: List<Path> = Path("/home/user")/listDirectoryEntries("*.kt")
+      //
+      fun main(){
+        println("Floored division -5/3: ${(-5).floorDiv(3)}")
+        println("Modulus; ${(-5).mod(3)}")
+
+        println("Truncated division -5/3: ${-5/3}")
+      println("Remainder: ${-5 % 3}")
+      }
+      //
+       @ExperimentalTime
+       fun main(){
+         val duration = Duration.milliseconds(120000)
+         println("There are ${duration.inWholeSeconds} seconds in ${duration.inWholeMinutes} minute")
+       }
+       //
+       fun main(){
+         val chars = listOf('a', '1', '+')
+         val (letterOrDigitList, notLetterORDigitList) = chars.partition{it.isLetterOrDigit()}
+       
+       println(letterOrDigitList)
+       println(notLetterOrDigitList)
+       
+       
+       
+       }
+       //
+       fun main(){
+         val chars = listOf(('ǅ', 'ǈ', 'ǋ', 'ǲ', '1', 'A', 'a', '+')
+         val (titleCases, notTitleCases) = chars.partition{it.isTitleCase()}
+       println(titleCases)
+       println(notTitleCases)
+                            
+                            }
+       }
+       //
+       fun main(){
+         val data = listOf("Kotlin", "1.5")
+         println(data.firstNotNullOf(String::toDoubleOrNull))
+        println(data.firstNotNullOfOrNull(Stirng::toIntOrNull))
+       
+       }
+
+       //
+       fun main(){
+         println("true".toBooleanStrict())
+       println("1", toBooleanStrictOrNull())
+       }
+       //
+       kotlin{
+         sourceSets{
+           val commonTest by getting{
+             dependencies{
+               implementation(kotlin("test"))
+             }
+           }
+           
+         }
+       }
+
+       //
+       tasks{
+         test{
+           useTestNG()
+
+           useJUnitPlatform()
+         }
+       }
+       //
+       @Test 
+       fun testFunction(){
+         val s: Any = "test"
+         assertIs<String>(s)
+
+         println("${s.length}")
+       }
+
+       //
+       @Test
+       fun test(){
+
+         val expectedArray = arrayOf(1,2,3)
+         val actualArray = Array(3) {it + 1}
+         assertContentEquals(expectedArray. actualArray)
+       }
+       //
+       @Test
+       fun test(){
+        val x = sin(PI)
+
+        val tolerance = 0.000001
+
+         assertEquals(0.0, x, tolerance)
+       
+       }
+
+       //
+       @Test
+       fun main(){
+
+         val sampleList = listOf<String>("sample", "sample2")
+         val sampleStirng = "sample"
+
+         assertContains(sampleList, sampleString)
+        assertContains(sampleString, "amp")
+       
+       }
+       //
+       @Test
+
+       fun test() = runBlocking<Unit>{
+
+         val deferred =async{"Kotlin is nice"}
+         assertTrue("Kotlin substring should be present"){
+           deferred.await().contains("Kotlin")
+         }
+       }
+
+       //
+       @JvmRecord
+       data class User(val name: String, val age: Int)
+
+       //
+       sealed interface Polygon
+
+       class Rectangle(): Polygon
+      class Triangle(): Polygon
+
+                            fun draw(polygon: Polygon) = when(polygon)]{
+                              
+                            is Rectangle ->
+                              is Triangle ->
+                            }
+                            //
+ sealed interaface Fillable{
+   fun fill()
+ }           
+ sealed interface Polygon{
+   val vertices: List<Point>
+   
+ }
+
+ class Rectangle(override val vertices: List<Point>): Fillable, Polygon{
+   override fun fill()
+ }
+ //
+ inline class Name(private val s: String)
+ value class Name(private val s: String)
+
+ @JvmInline
+ value class Name(private val s: String)
+
+ //
+ @JvmInline
+ value class Negative(val x: Int){
+   init{
+     require(x < 0) {}
+   }
+ }
+
+ //
+ inline class UInt(val x: Int)
+ fun compute(x:Int)
+
+ @JvmName("computeUInt")
+ fun compute(x: UInt){}
+ // 268/1299
+ 
